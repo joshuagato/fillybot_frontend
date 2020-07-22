@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import './App.scss';
-// import axios from 'axios';
+import axios from 'axios';
 
 class App extends Component {
 
@@ -30,7 +30,17 @@ class App extends Component {
   submitForm = event => {
     event.preventDefault();
 
-    console.log('Joshua')
+    const inputData = this.state.productinfo;
+
+    if (inputData.productsite === 'adidas') {
+      delete inputData.productsite;
+
+      // axios.post('http://127.0.0.1:80/adidas', inputData).then(response => {
+      axios.post('fillybot.fillycoder.com/adidas', inputData).then(response => {
+        console.log(response)
+      })
+      .catch(error => console.log(error))
+    }
   }
 
   componentDidUpdate(__, prevState, _) {
