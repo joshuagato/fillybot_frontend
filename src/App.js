@@ -6,6 +6,7 @@ class App extends Component {
 
   state = {
     productinfo: {
+      productsite: '',
       productname: '',
       productnumber: '',
       productsize: '',
@@ -13,7 +14,10 @@ class App extends Component {
     },
     userinfo: {
 
-    }
+    },
+    // tasks: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16]
+    tasks: [1,2,3,4,5,6,7,8,9,10],
+    createTaskDisabled: true
   }
 
   inputHandler = event => {
@@ -29,8 +33,18 @@ class App extends Component {
     console.log('Joshua')
   }
 
-  componentDidUpdate() {
-    console.log(this.state.productinfo)
+  componentDidUpdate(__, prevState, _) {
+    const i = this.state.productinfo;
+    const p = prevState.productinfo;
+
+    if (p.productsite !== i.productsite || p.productname !== i.productname || 
+      p.productsize !== i.productsize || p.productquantity !== i.productquantity) {
+        
+      if (i.productsite && i.productname && i.productnumber && i.productsize && i.productquantity)
+        this.setState({ createTaskDisabled: false });
+
+      else this.setState({ createTaskDisabled: true });
+    }
   }
 
   render() {
@@ -44,10 +58,10 @@ class App extends Component {
               <legend>Product Info</legend>
               <form onSubmit={this.submitForm}>
                 <label>Target Website
-                  <select>
+                  <select value={this.state.productsite} onChange={this.inputHandler} name="productsite">
                     <option>Select a website</option>
-                    <option>Adidas</option>
-                    <option>FootLocker</option>
+                    <option value="adidas">Adidas</option>
+                    <option value="footlocker">Footlocker</option>
                   </select>
                 </label>
                 <label>Product Name <input type="text" placeholder="Product Name" onChange={this.inputHandler} 
@@ -59,7 +73,7 @@ class App extends Component {
                 <label>Product Size
                   <select value={prod.productsize} onChange={this.inputHandler} name="productsize">
                     <option>Please select size</option>
-                    <option value="7.5">Size 4.0</option>
+                    <option value="4.0">Size 4.0</option>
                     <option value="7.5">Size 4.5</option>
                     <option value="8">Size 5</option>
                     <option value="8">Size 5.5</option>
@@ -93,7 +107,7 @@ class App extends Component {
                     <option>Samuel</option>
                   </select>
                 </label>
-                <button type="submit">CREATE TASK</button>
+                <button id="create-task" type="submit" disabled={this.state.createTaskDisabled}>CREATE TASK</button>
               </form>
             </fieldset>
 
@@ -107,18 +121,28 @@ class App extends Component {
                     <option>Samuel</option>
                   </select>
                 </label>
-                <button class="profile-btn" type="button">EDIT</button>
-                <button class="profile-btn" type="button">NEW</button>
+                <button className="profile-btn" type="button">EDIT</button>
+                <button className="profile-btn" type="button">NEW</button>
               </form>
             </fieldset>
           </section>
           <section id="tasks">
-            <div class="headings">
-              <span class="prod-id">PROD_ID</span><span class="size">SIZE</span>
-              <span class="site">SITE</span><span>PROFILE</span>
-              <span>STATUS</span><span>ACTION</span>
-            </div>
-            <hr />
+            <section id="fixed-section">
+              <div className="headings">
+                <span className="prod-id">ID</span><span className="size">SIZE</span>
+                <span className="site">WEBSITE</span><span className="profile">PROFILE</span>
+                <span className="status">STATUS</span><span className="action">ACTION</span>
+              </div>
+              <hr />
+            </section>
+            <section id="padding-section"></section>
+            {this.state.tasks.map(task => (
+              <div key={task} className="task-items">
+                <span className="prod-id">{'FV8317'}</span><span className="size">{'10.5'}</span>
+                <span className="site">{'adidas'}</span><span className="profile">{'Lemuel'}</span>
+                <span className="status">{'IDLE'}</span><span className="action">ACTION</span>
+              </div>
+            ))}
           </section>
         </div>
       </div>

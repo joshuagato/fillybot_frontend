@@ -1,3 +1,6 @@
+@import url("../node_modules/hover.css/scss/hover.scss");
+@import url("../node_modules/animate.css/animate.css");
+
 .App {
   background-color: rgba(190, 203, 223, 0.3);
   min-height: 100vh;
@@ -9,13 +12,13 @@
   color: white;
 
   #bot {
-    background-color: #282c34;
     height: 38rem;
     width: 70rem;
     display: flex;
     justify-content: space-between;
 
     #controls {
+      background-color: #282c34;
       height: 38rem;
       width: 20rem;
       padding: 0.2rem 0.5rem;
@@ -30,7 +33,7 @@
             display: block;
             margin: 0.5rem 0;
             font-size: 13px;
-            color: rgb(170, 170, 170);
+            color: #aaaaaa;
           }
   
           input {
@@ -85,11 +88,24 @@
             border: none;
             border-radius: 10rem;
             outline: none;
+            transition: all 0.5s ease-in-out;
   
             &:hover {
               background-color: #030303;
               color: #fff;
-              transition: all 0.5s ease-in-out;
+            }
+          }
+
+          #create-task {
+            &:enabled {
+              animation: bounceIn;
+              animation-duration: 2s;
+            }
+
+            &:disabled {
+              cursor: not-allowed;
+              color: #b1b1b1;
+              background-color: #353535;
             }
           }
 
@@ -105,13 +121,82 @@
       height: 38rem;
       background-color: #35374e;
       width: 50rem;
-      padding: 1rem;
+      padding: 0 1rem 1rem 1rem;
+      overflow-y: auto;
+
+      // width
+      &::-webkit-scrollbar {
+        width: 5px;
+      }
+
+      // track
+      &::-webkit-scrollbar-track {
+        box-shadow: inset 0  0 5px #030303;
+        border-radius: 3px;
+      }
+
+      // handle
+      &::-webkit-scrollbar-thumb  {
+        background: #acacac;
+        border-radius: 3px;
+      }
 
       .headings {
-        display: flex;
-        justify-content: space-between;
         font-weight: 600;
-        padding-bottom: 0.5rem;
+        padding: 1rem 0.7rem 1rem 1rem;
+      }
+
+      #fixed-section {
+        background-color: #0c3530;
+        position: fixed;
+        z-index: 10;
+      }
+
+      #padding-section {
+        margin: 3.5rem 0;
+      }
+
+      .task-items {
+        padding: 1rem 0 1rem 1rem;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 400;
+        
+        &:nth-child(even) {
+          background-color: #37524f;
+        }
+      }
+
+      .prod-id {
+        display: inline-block;
+        width: 5rem;
+      }
+
+      .size {
+        display: inline-block;
+        width: 5rem;
+      }
+
+      .site {
+        display: inline-block;
+        width: 8rem;
+      }
+
+      .profile {
+        display: inline-block;
+        width: 8rem;
+        // margin-right: 0;
+      }
+
+      .status {
+        display: inline-block;
+        width: 10rem;
+        // margin-right: 0;
+      }
+
+      .action {
+        display: inline-block;
+        width: 10rem;
+        // margin-right: 0;
       }
     }
   }

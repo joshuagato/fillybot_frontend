@@ -4,6 +4,8 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+// import 'animate.css/animate.css';
+
 ReactDOM.render(
   <React.StrictMode>
     <App />
