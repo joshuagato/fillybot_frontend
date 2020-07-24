@@ -4,11 +4,33 @@ import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
+import axios from 'axios';
+import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
+import { Provider } from 'react-redux';
+import thunk from 'redux-thunk';
+
+import tasksReducer from './store/reducers/tasks-reducer';
+
 // import 'animate.css/animate.css';
+axios.defaults.baseURL = 'http://127.0.0.1:5000';
+
+const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
+
+const rootReducer = combineReducers({
+  tasksReducer: tasksReducer
+});
+
+const reduxStore = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));
+
+const app = (
+  <Provider store={reduxStore}>
+    <App />
+  </Provider>
+);
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    {app}
   </React.StrictMode>,
   document.getElementById('root')
 );
