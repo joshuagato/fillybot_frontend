@@ -1,1 +1,1 @@
-export { addTask, fetchAllTasks, deleteTask } from './task-actions';
+export { addTask, fetchAllTasks, deleteTask, purchaseAdidas } from './task-actions';

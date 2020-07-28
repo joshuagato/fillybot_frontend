@@ -12,15 +12,21 @@ class App extends Component {
   state = {
     productinfo: {
       user: '1',
-      productsite: '',
+      productsite: '0',
       productname: '',
       productnumber: '',
-      productsize: '',
+      productsize: '0',
       productquantity: '',
       profile: '3'
     },
     userinfo: {
-
+      firstname: 'Lemuel',
+      lastname: 'Baah',
+      address: '2046 Nicklaus circle',
+      city: 'Roseville',
+      zipcode: '95678',
+      phone: '16145564480',
+      email: 'lemuelzerubbabelbaah@gmail.com',
     },
     tasks: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
     // tasks: [1,2,3,4,5,6,7,8,9,10],
@@ -28,7 +34,6 @@ class App extends Component {
   }
 
   inputHandler = event => {
-    // console.log(event.target.name)
     const updatedProductInfo = { ...this.state.productinfo };
     updatedProductInfo[event.target.name] = event.target.value
     this.setState({ productinfo: updatedProductInfo });
@@ -37,19 +42,15 @@ class App extends Component {
   submitForm = event => {
     event.preventDefault();
 
-    const inputData = this.state.productinfo;
+    this.props.onAddTask(this.state.productinfo);
+  }
 
-    if (inputData.productsite === 'adidas') {
-      // delete inputData.productsite;
+  purchase = (productDetails, userDetails) => {
+    const { prod_name, prod_number, prod_qty, prod_size } = productDetails;
+    const details = { ...userDetails, prod_number, prod_name, prod_qty, prod_size }
 
-      // axios.post('fillybot.fillycoder.com/adidas', inputData).then(response => {
-      // axios.post('http://127.0.0.1:5000/adidas', inputData).then(response => {
-      // axios.post('http://127.0.0.1:5000/addtask', inputData).then(response => {
-      // axios.get('http://127.0.0.1:5000/fetchalltasks').then(response => {
-        // console.log(response)
-      // })
-      // .catch(error => console.log(error))
-      this.props.onAddTask(inputData);
+    if (productDetails.website === 'adidas') {
+      this.props.onPurchaseAdidas(details)
     }
   }
 
@@ -73,16 +74,13 @@ class App extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, _) {
-    // console.log(this.state.productinfo)
-    console.log(this.props.tasks)
-
     const i = this.state.productinfo;
     const p = prevState.productinfo;
 
     if (p.productsite !== i.productsite || p.productname !== i.productname || 
       p.productsize !== i.productsize || p.productquantity !== i.productquantity) {
         
-      if (i.productsite !== "0" && i.productname && i.productnumber && 
+      if (i.productsite && i.productsite !== "0" && i.productname && i.productnumber && 
         i.productsize !== "0" && i.productquantity && i.productquantity !== "0")
         this.setState({ createTaskDisabled: false });
 
@@ -95,6 +93,7 @@ class App extends Component {
 
   render() {
     const prod = this.state.productinfo;
+    const user = this.state.userinfo;
 
     return (
       <div className="App">
@@ -107,7 +106,7 @@ class App extends Component {
                   <select value={this.state.productsite} onChange={this.inputHandler} name="productsite">
                     <option value="0">Select a website</option>
                     <option value="adidas">Adidas</option>
-                    <option value="footlocker">Footlocker</option>
+                    {/* <option value="footlocker">Footlocker</option> */}
                   </select>
                 </label>
                 <label>Product Name <input type="text" placeholder="Product Name" onChange={this.inputHandler} 
@@ -188,8 +187,12 @@ class App extends Component {
                 <span className="site">{task.website}</span><span className="profile">{'Lemuel'}</span>
                 <span className="status">{'IDLE'}</span>
                 <span className="action">
-                  <span id="start"><FontAwesomeIcon icon={faPlay} /></span>
-                  <span id="delete" onClick={() => this.deleteTask(task.id)}><FontAwesomeIcon icon={faTrashAlt} /></span>
+                  <span id="start" onClick={() => this.purchase(task, user)} title="Purchase">
+                    <FontAwesomeIcon icon={faPlay} />
+                  </span>
+                  <span id="delete" onClick={this.deleteTask.bind(this, task.id)} title="Delete">
+                    <FontAwesomeIcon icon={faTrashAlt} />
+                  </span>
                 </span>
               </div>
             ))}
@@ -211,7 +214,8 @@ const mapDispatchToProps = dispatch => {
   return {
     onAddTask: data => dispatch(actions.addTask(data)),
     onFetchAllTasks: message => dispatch(actions.fetchAllTasks(message)),
-    onDeleteTask: id => dispatch(actions.deleteTask(id))
+    onDeleteTask: id => dispatch(actions.deleteTask(id)),
+    onPurchaseAdidas: details => dispatch(actions.purchaseAdidas(details))
   }
 };
 
