@@ -20,7 +20,7 @@ class Register extends Component {
             <div className="form-group">
               <input type="text" name="lastname" autoComplete="off" required />
               <label htmlFor="lastname">
-                <span>First Name</span>
+                <span>Last Name</span>
               </label>
             </div>
             <div className="form-group">
