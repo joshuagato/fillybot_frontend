@@ -29,8 +29,7 @@ class Login extends Component {
               </label>
             </div>
             <div className="button-group">
-              {/* <NavLink to='/' className="btn btn1" type="submit">Log In</NavLink> */}
-              <button type="submit">Log In</button>
+              <button type="submit" className="grow_spin">Log In</button>
             </div>
             <div className="button-group">
               <span className="question">Not a member yet?</span>

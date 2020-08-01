@@ -42,8 +42,7 @@ class Register extends Component {
               </label>
             </div>
             <div className="button-group">
-              {/* <NavLink to='/' className="btn btn1" type="submit">Log In</NavLink> */}
-              <button type="submit">JOIN US</button>
+              <button type="submit" className="grow_ellipse">JOIN US</button>
             </div>
             <div className="button-group">
               <span className="question">Already with us?</span>
