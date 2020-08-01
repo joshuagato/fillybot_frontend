@@ -5,6 +5,7 @@ import App from './App';
 import * as serviceWorker from './serviceWorker';
 
 import axios from 'axios';
+import { BrowserRouter } from 'react-router-dom';
 import { createStore, compose, applyMiddleware, combineReducers } from 'redux';
 import { Provider } from 'react-redux';
 import thunk from 'redux-thunk';
@@ -24,7 +25,9 @@ const reduxStore = createStore(rootReducer, composeEnhancers(applyMiddleware(thu
 
 const app = (
   <Provider store={reduxStore}>
-    <App />
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
   </Provider>
 );
 
