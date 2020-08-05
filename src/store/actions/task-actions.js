@@ -9,7 +9,7 @@ export const addTask = productDetails => {
   };
 };
 
-export const purchaseAdidas = (productAndUserDetails) => {
+export const purchaseAdidas = productAndUserDetails => {
   return dispatch => {
     axios.post('/adidas', productAndUserDetails)
     // .then(() => dispatch(fetchAllTasks()))

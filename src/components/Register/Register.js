@@ -46,7 +46,7 @@ class Register extends Component {
             </div>
             <div className="button-group">
               <span className="question">Already with us?</span>
-              <NavLink to="/login" className="button button--nanuk button--text-thick button--text-upper button--size-s button--border-thick">
+              <NavLink to="/" className="button button--nanuk button--text-thick button--text-upper button--size-s button--border-thick">
                 <span>L</span><span>o</span><span>g</span><span>i</span><span>n</span>
               </NavLink>
             </div>
