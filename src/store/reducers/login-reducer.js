@@ -6,8 +6,8 @@ const initialState = {
   failureMessage: '',
   // token: '',
   // user: {}
-  token: '' || localStorage.getItem('token'),
-  user: {} || JSON.parse(localStorage.getItem('user'))
+  token: localStorage.getItem('token') || '',
+  user: JSON.parse(localStorage.getItem('user')) || {}
 }
 
 const reducer = (state = initialState, action) => {
@@ -23,7 +23,7 @@ const reducer = (state = initialState, action) => {
 
     case actionTypes.LOGOUT:
       return { ...state, loading: false, failureMessage: '', successMessage: '', token: null,
-      userInfo: { ...state.userInfo, firstname: null, lastname: null, email: null } };
+      user: {} };
 
     default: return state;
   }

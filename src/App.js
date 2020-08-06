@@ -40,7 +40,9 @@ const mapStateToProps = state => {
   return {
     user: state.loginReducer.user,
     token: state.loginReducer.token,
-    authenticated: state.loginReducer.token !== null && state.loginReducer.user.email !== null
+    authenticated: state.loginReducer.token !== '' && state.loginReducer.token !== null && 
+      state.loginReducer.token !== undefined && state.loginReducer.user.email !== '' &&
+      state.loginReducer.user.email !== null && state.loginReducer.user.email !== undefined
   }
 }
 

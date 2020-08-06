@@ -11,26 +11,16 @@ class BotInterface extends Component {
 
   state = {
     productinfo: {
-      user: '1',
+      user: '',
       productsite: '0',
       productname: '',
       productnumber: '',
       productsize: '0',
       productquantity: '',
-      profile: '3'
+      profile: '0'
     },
-    userinfo: {
-      firstname: 'Lemuel',
-      lastname: 'Baah',
-      address: '2046 Nicklaus circle',
-      city: 'Roseville',
-      zipcode: '95678',
-      phone: '16145564480',
-      email: 'lemuelzerubbabelbaah@gmail.com',
-    },
-    tasks: [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18,19,20],
-    // tasks: [1,2,3,4,5,6,7,8,9,10],
-    createTaskDisabled: true
+    createTaskDisabled: true,
+    profileinfo: {}
   }
 
   inputHandler = event => {
@@ -64,13 +54,35 @@ class BotInterface extends Component {
     })
     .then((willDelete) => {
       if (willDelete) {
-        this.props.onDeleteTask(productId);        
+        this.props.onDeleteTask(productId, this.props.user.id);        
       }
     });
   }
 
+  fetchProfile = id => {
+    return this.props.profiles.find(profile => parseInt(profile.id) === parseInt(id));
+  }
+
+  profileHandler = event => {
+    const profileId = event.target.value;
+    const profileinfo = this.fetchProfile(profileId);
+    this.setState({ profileId, profileinfo });
+  }
+
+  isEmpty = obj => {
+    return Object.keys(obj).length === 0;
+  }
+
+  setUser = () => {
+    const updatedProductInfo = { ...this.state.productinfo };
+    updatedProductInfo['user'] = this.props.user.id
+    this.setState({ productinfo: updatedProductInfo });
+  }
+
   componentDidMount() {
-    this.props.onFetchAllTasks();
+    this.props.onFetchAllProfiles(this.props.user.id);
+    this.props.onFetchAllTasks(this.props.user.id);
+    this.setUser();
   }
 
   componentDidUpdate(prevProps, prevState, _) {
@@ -78,22 +90,23 @@ class BotInterface extends Component {
     const p = prevState.productinfo;
 
     if (p.productsite !== i.productsite || p.productname !== i.productname || 
-      p.productsize !== i.productsize || p.productquantity !== i.productquantity) {
+      p.productsize !== i.productsize || p.productquantity !== i.productquantity ||
+      p.profile !== i.profile) {
         
       if (i.productsite && i.productsite !== "0" && i.productname && i.productnumber && 
-        i.productsize !== "0" && i.productquantity && i.productquantity !== "0")
-        this.setState({ createTaskDisabled: false });
+        parseInt(i.productsize) >= 1 && i.productquantity && parseInt(i.productquantity) >= 1 &&
+        parseInt(i.profile) >= 1)
+          this.setState({ createTaskDisabled: false });
 
       else this.setState({ createTaskDisabled: true });
     }
 
-    if (this.props.tasks.length !== prevProps.tasks.length) this.props.onFetchAllTasks()
-
+    if (this.props.tasks.length !== prevProps.tasks.length) this.props.onFetchAllTasks(this.props.user.id);
   }
 
   render() {
     const prod = this.state.productinfo;
-    const user = this.state.userinfo;
+    const user = this.state.profileinfo;
 
     return (
       <div className="bot-interface">
@@ -142,14 +155,15 @@ class BotInterface extends Component {
                     <option value="14.5">Size 14.5</option>
                   </select>
                 </label>
-                <label>Product Quantity <input type="number" placeholder="Product Number" onChange={this.inputHandler} 
+                <label>Product Quantity<input type="number" placeholder="Product Number" onChange={this.inputHandler} 
                   value={prod.productquantity} name="productquantity" />
                 </label>
                 <label>User Profile
-                  <select>
+                  <select value={prod.profile} onChange={this.inputHandler} name="profile">
                     <option value="0">Select a profile</option>
-                    <option>Lemuel</option>
-                    <option>Samuel</option>
+                    {this.props.profiles.map(profile => (
+                      <option value={profile.id} key={profile.id}>{profile.profile_name}</option>
+                    ))}
                   </select>
                 </label>
                 <button id="create-task" type="submit" disabled={this.state.createTaskDisabled}>CREATE TASK</button>
@@ -162,8 +176,9 @@ class BotInterface extends Component {
                 <label>User Profile
                   <select>
                     <option value="0">Select a profile to edit</option>
-                    <option>Lemuel</option>
-                    <option>Samuel</option>
+                    {this.props.profiles.map(profile => (
+                      <option value={profile.id} key={profile.id}>{profile.profile_name}</option>
+                    ))}
                   </select>
                 </label>
                 <button className="profile-btn" type="button">EDIT</button>
@@ -207,15 +222,18 @@ const mapStateToProps = state => {
   return {
     tasks:  state.tasksReducer.tasks,
     failureMessage:  state.tasksReducer.failureMessage,
+    profiles: state.profilesReducer.profiles,
+    user: state.loginReducer.user
   }
 };
 
 const mapDispatchToProps = dispatch => {
   return {
     onAddTask: data => dispatch(actions.addTask(data)),
-    onFetchAllTasks: message => dispatch(actions.fetchAllTasks(message)),
-    onDeleteTask: id => dispatch(actions.deleteTask(id)),
-    onPurchaseAdidas: details => dispatch(actions.purchaseAdidas(details))
+    onFetchAllTasks: id => dispatch(actions.fetchAllTasks(id)),
+    onDeleteTask: (prodid, userid) => dispatch(actions.deleteTask(prodid, userid)),
+    onPurchaseAdidas: details => dispatch(actions.purchaseAdidas(details)),
+    onFetchAllProfiles: id => dispatch(actions.fetchAllProfiles(id))
   }
 };
 

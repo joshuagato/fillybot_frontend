@@ -12,6 +12,7 @@ import thunk from 'redux-thunk';
 
 import tasksReducer from './store/reducers/tasks-reducer';
 import loginReducer from './store/reducers/login-reducer';
+import profilesReducer from './store/reducers/profiles-reducer';
 
 // import 'animate.css/animate.css';
 axios.defaults.baseURL = 'http://127.0.0.1:5000';
@@ -20,7 +21,8 @@ const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX
 
 const rootReducer = combineReducers({
   tasksReducer: tasksReducer,
-  loginReducer: loginReducer
+  loginReducer: loginReducer,
+  profilesReducer: profilesReducer
 });
 
 const reduxStore = createStore(rootReducer, composeEnhancers(applyMiddleware(thunk)));

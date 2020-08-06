@@ -9,27 +9,10 @@ export const addProfile = profileDetails => {
   };
 };
 
-export const purchaseAdidas = (productAndUserDetails) => {
-  return dispatch => {
-    axios.post('/adidas', productAndUserDetails)
-    // .then(() => dispatch(fetchAllTasks()))
-    .then(response => console.log(response.data))
-    .catch(() => dispatch(fetchAllProfiles()));
-  };
-};
-
-export const deleteTask = productId => {
-  return dispatch => {
-    axios.delete('/deletetask/' + productId)
-    .then(() => dispatch(fetchAllProfiles()))
-    .catch(() => dispatch(fetchAllProfiles()));
-  };
-};
-
-const fetchAllProfilesSuccess = tasks => {
+const fetchAllProfilesSuccess = profiles => {
   return {
-    type: actionTypes.FETCH_TASKS_SUCCESS,
-    tasks: tasks
+    type: actionTypes.FETCH_PROFILES_SUCCESS,
+    profiles: profiles
   };
 };
 
@@ -40,10 +23,10 @@ const fetchAllProfilesFailure = message => {
   };
 };
 
-export const fetchAllProfiles = () => {
+export const fetchAllProfiles = id => {
   return dispatch => {
-    axios.get('/fetchallprofiles')
-    .then(response => dispatch(fetchAllProfilesSuccess(response.data.tasks)))
+    axios.get('/fetchalluserprofiles/' + id)
+    .then(response => dispatch(fetchAllProfilesSuccess(response.data.profiles)))
     .catch(error => {
       if (error.response) dispatch(fetchAllProfilesFailure(error.response.data.message));
     });

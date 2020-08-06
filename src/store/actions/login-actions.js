@@ -41,18 +41,14 @@ export const login = userInput => {
 };
 
 export const logout = () => {
-  localStorage.removeItem('firstname');
-  localStorage.removeItem('lastname');
-  localStorage.removeItem('email');
-  localStorage.removeItem('token');
-  // localStorage.removeItem('addr1');
-  // localStorage.removeItem('addr2');
-  // localStorage.removeItem('city');
-  // localStorage.removeItem('country');
-  // localStorage.removeItem('postalCode');
-  // localStorage.removeItem('state');
-
+  clearStorage();
   return {
     type: actionTypes.LOGOUT
   };
+}
+
+const clearStorage = () => {
+  localStorage.removeItem('user');
+  localStorage.removeItem('token');
+  localStorage.clear();
 }
