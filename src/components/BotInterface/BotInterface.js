@@ -212,6 +212,10 @@ class BotInterface extends Component {
               </div>
             ))}
           </section>
+          <section id="user-specific-data">
+            <div className="username">{this.props.user.firstname}</div>
+            <button className="logout">Logout</button>
+          </section>
         </div>
       </div>
     );
