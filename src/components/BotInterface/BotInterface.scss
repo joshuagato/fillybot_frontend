@@ -254,6 +254,23 @@
       flex-direction: column;
       align-items: center;
       justify-content: center;
+
+      .logout {
+        background-color: #ac3045;
+        color: rgb(204, 200, 200);
+        border: none;
+        border-radius: 1rem;
+        width: 6rem;
+        height: 2rem;
+        margin: 0.5rem;
+        cursor: pointer;
+        transition: all 0.3s ease-in-out;
+
+        &:hover {
+          background-color: #dd1133;
+          color: #fff;
+        }
+      }
     }
   }
 }

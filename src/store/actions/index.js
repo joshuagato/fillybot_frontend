@@ -2,4 +2,4 @@ export { addTask, fetchAllTasks, deleteTask, purchaseAdidas } from './task-actio
 
 export { fetchAllProfiles } from './profile-actions';
 
-export { login } from './login-actions';
+export { login, logout } from './login-actions';

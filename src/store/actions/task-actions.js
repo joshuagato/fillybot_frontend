@@ -12,9 +12,9 @@ export const addTask = productDetails => {
 export const purchaseAdidas = productAndUserDetails => {
   return dispatch => {
     axios.post('/adidas', productAndUserDetails)
-    // .then(() => dispatch(fetchAllTasks()))
-    .then(response => console.log(response.data))
-    .catch(() => dispatch(fetchAllTasks()));
+    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // .then(response => console.log(response.data))
+    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
   };
 };
 

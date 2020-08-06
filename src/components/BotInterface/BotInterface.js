@@ -36,26 +36,21 @@ class BotInterface extends Component {
   }
 
   purchase = (productDetails, userDetails) => {
-    const { prod_name, prod_number, prod_qty, prod_size } = productDetails;
-    const details = { ...userDetails, prod_number, prod_name, prod_qty, prod_size }
+    const { user, prod_name, prod_number, prod_qty, prod_size } = productDetails;
+    const details = { ...userDetails, user, prod_number, prod_name, prod_qty, prod_size };
 
     if (productDetails.website === 'adidas') {
-      this.props.onPurchaseAdidas(details)
+      this.props.onPurchaseAdidas(details);
     }
   }
 
   deleteTask = productId => {
     swal({
-      title: "Are you sure?",
-      text: "Once deleted, you will not be able to recover this task",
-      icon: "warning",
-      buttons: true,
-      dangerMode: true,
+      title: "Are you sure?", text: "Once deleted, you will not be able to recover this task",
+      icon: "warning", buttons: true, dangerMode: true,
     })
-    .then((willDelete) => {
-      if (willDelete) {
-        this.props.onDeleteTask(productId, this.props.user.id);        
-      }
+    .then(willDelete => {
+      if (willDelete) this.props.onDeleteTask(productId, this.props.user.id);        
     });
   }
 
@@ -77,6 +72,19 @@ class BotInterface extends Component {
     const updatedProductInfo = { ...this.state.productinfo };
     updatedProductInfo['user'] = this.props.user.id
     this.setState({ productinfo: updatedProductInfo });
+  }
+
+  getProfileName = id => {
+    const matchedProfile = this.props.profiles.find(profile => parseInt(profile.id)  === parseInt(id))
+    return matchedProfile.profile_name;
+  }
+
+  getProfileData = id => {
+    return this.props.profiles.find(profile => parseInt(profile.id)  === parseInt(id))
+  }
+
+  logout = () => {
+    this.props.onLogout();
   }
 
   componentDidMount() {
@@ -106,7 +114,6 @@ class BotInterface extends Component {
 
   render() {
     const prod = this.state.productinfo;
-    const user = this.state.profileinfo;
 
     return (
       <div className="bot-interface">
@@ -199,10 +206,11 @@ class BotInterface extends Component {
             {this.props.tasks.map(task => (
               <div key={task.id} className="task-items">
                 <span className="prod-id">{task.prod_number}</span><span className="size">{task.prod_size}</span>
-                <span className="site">{task.website}</span><span className="profile">{'Lemuel'}</span>
+                <span className="site">{task.website}</span><span className="profile">
+                  {this.getProfileName(task.profile)}</span>
                 <span className="status">{'IDLE'}</span>
                 <span className="action">
-                  <span id="start" onClick={() => this.purchase(task, user)} title="Purchase">
+                  <span id="start" onClick={() => this.purchase(task, this.getProfileData(task.profile))} title="Purchase">
                     <FontAwesomeIcon icon={faPlay} />
                   </span>
                   <span id="delete" onClick={this.deleteTask.bind(this, task.id)} title="Delete">
@@ -214,7 +222,7 @@ class BotInterface extends Component {
           </section>
           <section id="user-specific-data">
             <div className="username">{this.props.user.firstname}</div>
-            <button className="logout">Logout</button>
+            <button onClick={this.logout} className="logout">Logout</button>
           </section>
         </div>
       </div>
@@ -237,7 +245,8 @@ const mapDispatchToProps = dispatch => {
     onFetchAllTasks: id => dispatch(actions.fetchAllTasks(id)),
     onDeleteTask: (prodid, userid) => dispatch(actions.deleteTask(prodid, userid)),
     onPurchaseAdidas: details => dispatch(actions.purchaseAdidas(details)),
-    onFetchAllProfiles: id => dispatch(actions.fetchAllProfiles(id))
+    onFetchAllProfiles: id => dispatch(actions.fetchAllProfiles(id)),
+    onLogout: () => dispatch(actions.logout())
   }
 };
 
