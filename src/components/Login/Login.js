@@ -26,10 +26,6 @@ class Login extends Component {
     this.props.onLogin(this.state.loginData);
   }
 
-  componentDidUpdate() {
-    // if (this.props.authenticated) this.props.history.replace('/interface');
-  }
-
   render() {
     const input = this.state.loginData;
     return (

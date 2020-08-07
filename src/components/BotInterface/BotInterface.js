@@ -75,12 +75,12 @@ class BotInterface extends Component {
   }
 
   getProfileName = id => {
-    const matchedProfile = this.props.profiles.find(profile => parseInt(profile.id)  === parseInt(id))
+    const matchedProfile = this.props.profiles.find(profile => parseInt(profile.id)  === parseInt(id));
     return matchedProfile.profile_name;
   }
 
   getProfileData = id => {
-    return this.props.profiles.find(profile => parseInt(profile.id)  === parseInt(id))
+    return this.props.profiles.find(profile => parseInt(profile.id) === parseInt(id));
   }
 
   logout = () => {
