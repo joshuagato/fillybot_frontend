@@ -15,7 +15,8 @@ import loginReducer from './store/reducers/login-reducer';
 import profilesReducer from './store/reducers/profiles-reducer';
 
 // import 'animate.css/animate.css';
-axios.defaults.baseURL = 'http://127.0.0.1:5000';
+// axios.defaults.baseURL = 'http://127.0.0.1:5000';
+axios.defaults.baseURL = 'http://54.190.13.88';
 
 const composeEnhancers = process.env.NODE_ENV === 'development' ? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ : null || compose;
 
