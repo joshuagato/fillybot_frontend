@@ -18,8 +18,8 @@ class App extends Component {
   render() {
     let routes = (
       <Switch>
-        <Route path='/register'><Register /></Route>
-        <Route path='/'><Login /></Route>
+        <Route exact path='/register'><Register /></Route>
+        <Route exact path='/' render={props => <Login {...props} />} />
         <Redirect from="*" to='/' />
       </Switch>
     );
@@ -27,7 +27,7 @@ class App extends Component {
     if (this.props.authenticated) {
       routes = (
         <Switch>
-          <Route path='/interface' component={BotInterface} />
+          <Route exact path='/interface' component={BotInterface} />
           <Redirect from="*" to='/interface' />
         </Switch>
       );
@@ -40,7 +40,8 @@ const mapStateToProps = state => {
   return {
     user: state.loginReducer.user,
     token: state.loginReducer.token,
-    authenticated: state.loginReducer.token !== '' && state.loginReducer.token !== null && 
+    authenticated: state.loginReducer.user.email !== '' && state.loginReducer.user.email !== null && state.loginReducer.user.email !== undefined,
+    authenticated2: state.loginReducer.token !== '' && state.loginReducer.token !== null && 
       state.loginReducer.token !== undefined && state.loginReducer.user.email !== '' &&
       state.loginReducer.user.email !== null && state.loginReducer.user.email !== undefined
   }

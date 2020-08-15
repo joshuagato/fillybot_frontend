@@ -84,7 +84,7 @@ class BotInterface extends Component {
   }
 
   logout = () => {
-    this.props.onLogout();
+    if (this.props.onLogout()) this.props.history.replace('/');
   }
 
   componentDidMount() {

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, withRouter } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUsers } from '@fortawesome/free-solid-svg-icons';
@@ -23,7 +23,9 @@ class Login extends Component {
 
   loginHandler = event => {
     event.preventDefault();
-    this.props.onLogin(this.state.loginData);
+    this.props.onLogin(this.state.loginData).then(result => {
+      if (result) this.props.history.replace('/interface');
+    });
   }
 
   render() {
@@ -81,4 +83,4 @@ const mapDispatchToProps = dispatch => {
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Login);
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Login));

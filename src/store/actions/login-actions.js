@@ -25,23 +25,37 @@ const loginFailure = message => {
 
 export const login = userInput => {
   return dispatch => {    
-    axios.post('/login', userInput).then(response => {
-      if (response.data.success) {
-        dispatch(loginSuccess(response.data));
-        localStorage.setItem('user', JSON.stringify(response.data.user));
-        localStorage.setItem('token', JSON.stringify(response.data.token));
-      }
-      else  
-        dispatch(loginSuccessWithWarning(response.data.message))
+    return new Promise((resolve, reject) => {
+      axios.post('/login', userInput).then(response => {
+        if (response.data.success) {
+          dispatch(loginSuccess(response.data));
+          localStorage.setItem('user', JSON.stringify(response.data.user));
+          // localStorage.setItem('token', JSON.stringify(response.data.token));
+          resolve(true);
+        }
+        else {
+          dispatch(loginSuccessWithWarning(response.data.message))
+          reject(false);
+        }
+      })
+      .catch(error => {
+        if (error.response) dispatch(loginFailure(error.response.data.message));
+      });
     })
-    .catch(error => {
-      if (error.response) dispatch(loginFailure(error.response.data.message));
-    });
   };
 };
 
 export const logout = () => {
-  clearStorage();
+  return dispatch => {
+    return new Promise(honour => {
+      dispatch(logoutSuccess());
+      clearStorage();
+      honour(true);
+    });
+  };
+};
+
+const logoutSuccess = () => {
   return {
     type: actionTypes.LOGOUT
   };
@@ -49,6 +63,6 @@ export const logout = () => {
 
 const clearStorage = () => {
   localStorage.removeItem('user');
-  localStorage.removeItem('token');
+  // localStorage.removeItem('token');
   localStorage.clear();
 }

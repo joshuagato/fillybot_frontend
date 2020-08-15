@@ -6,7 +6,7 @@ const initialState = {
   failureMessage: '',
   // token: '',
   // user: {}
-  token: localStorage.getItem('token') || '',
+  // token: localStorage.getItem('token') || '',
   user: JSON.parse(localStorage.getItem('user')) || {}
 }
 
