@@ -20,7 +20,19 @@ class BotInterface extends Component {
       profile: '0'
     },
     createTaskDisabled: true,
-    profileinfo: {}
+    profileinfo: {},
+    sizes: [
+      '4', '4.0', '04.0', 'M 4 / W 5', '4.5', '04.5', 'M 4.5 / W 5.5', '5', '5.0', '05.0', 'M 5 / W 6',
+      '5.5', '05.5', 'M 5.5 / W 6.5', '6', '6.0', '06.0', 'M 6 / W 7', '6.5', '06.5', 'M 6.5 / W 7.5',
+      '7', '7.0', '07.0', 'M 7 / W 7.5', '7.5', '07.5', 'M 7.5 / W 8.5', '8', '8.0', '08.5', 'M 8 / W 9',
+      '8.5', '08.5', 'M 8.5 / W 9.5', '9', '9.0', '09.0', 'M 9 / W 10', '9.5', '09.5', 'M 9.5 / W 10.5',
+      '10', '10.0', 'M 10 / W 11', '10.5', 'M 10.5 / W 11.5', '11', '11.0', 'M 11 / W 12', '11.5', 'M 11.5 / W 12.5',
+      '12', '12.0', 'M 12 / W 13', '12.5', 'M 12.5 / W 13.5', '13', '13.0', 'M 13 / W 14', '13.5', 'M 13.5 / W 13.5',
+      '14', '14.0', 'M 14 / W 15', '14.5', 'M 14.5 / W 15.5', '15', '15.0', 'M 15 / W 16', '15.5', 'M 15.5 / W 16.5',
+      '16', '16.0', 'M 16 / W 17', '16.5', 'M 16.5 / W 17.5', '17', '17.0', 'M 17 / W 18', '17.5', 'M 17.5 / W 18.5',
+      '18', '18.0', 'M 18 / W 19'
+    ],
+    sites: ['adidas', 'eastbay', 'footlocker', 'champs']
   }
 
   inputHandler = event => {
@@ -31,7 +43,6 @@ class BotInterface extends Component {
 
   submitForm = event => {
     event.preventDefault();
-
     this.props.onAddTask(this.state.productinfo);
   }
 
@@ -41,6 +52,12 @@ class BotInterface extends Component {
 
     if (productDetails.website === 'adidas') {
       this.props.onPurchaseAdidas(details);
+    } else if (productDetails.website === 'eastbay') {
+      this.props.onPurchaseEastbay(details);
+    } else if (productDetails.website === 'footlocker') {
+      this.props.onPurchaseFootlocker(details);
+    } else if (productDetails.website === 'champs') {
+      this.props.onPurchaseChampssports(details);
     }
   }
 
@@ -102,7 +119,7 @@ class BotInterface extends Component {
       p.profile !== i.profile) {
         
       if (i.productsite && i.productsite !== "0" && i.productname && i.productnumber && 
-        parseInt(i.productsize) >= 1 && i.productquantity && parseInt(i.productquantity) >= 1 &&
+        i.productquantity && parseInt(i.productquantity) >= 1 &&
         parseInt(i.profile) >= 1)
           this.setState({ createTaskDisabled: false });
 
@@ -114,6 +131,8 @@ class BotInterface extends Component {
 
   render() {
     const prod = this.state.productinfo;
+    const sizes = this.state.sizes;
+    const sites = this.state.sites;
 
     return (
       <div className="bot-interface">
@@ -125,8 +144,7 @@ class BotInterface extends Component {
                 <label>Target Website
                   <select value={this.state.productsite} onChange={this.inputHandler} name="productsite">
                     <option value="0">Select a website</option>
-                    <option value="adidas">Adidas</option>
-                    {/* <option value="footlocker">Footlocker</option> */}
+                    {sites.map((site, index) => <option key={index} value={site}>{site.charAt(0).toUpperCase() + site.slice(1)}</option>)}
                   </select>
                 </label>
                 <label>Product Name <input type="text" placeholder="Product Name" onChange={this.inputHandler} 
@@ -138,28 +156,7 @@ class BotInterface extends Component {
                 <label>Product Size
                   <select value={prod.productsize} onChange={this.inputHandler} name="productsize">
                     <option value="0">Please select size</option>
-                    <option value="4.0">Size 4.0</option>
-                    <option value="4.5">Size 4.5</option>
-                    <option value="5">Size 5</option>
-                    <option value="5.5">Size 5.5</option>
-                    <option value="6">Size 6</option>
-                    <option value="6.5">Size 6.5</option>
-                    <option value="7">Size 7</option>
-                    <option value="7.5">Size 7.5</option>
-                    <option value="8">Size 8</option>
-                    <option value="8.5">Size 8.5</option>
-                    <option value="9">Size 9</option>
-                    <option value="9.5">Size 9.5</option>
-                    <option value="10">Size 10</option>
-                    <option value="10.5">Size 10.5</option>
-                    <option value="11">Size 11</option>
-                    <option value="11.5">Size 11.5</option>
-                    <option value="12">Size 12</option>
-                    <option value="12.5">Size 12.5</option>
-                    <option value="13">Size 13</option>
-                    <option value="13.5">Size 13.5</option>
-                    <option value="14">Size 14</option>
-                    <option value="14.5">Size 14.5</option>
+                    {sizes.map((size, index) => <option key={index} value={size}>Size {size}</option>)}
                   </select>
                 </label>
                 <label>Product Quantity<input type="number" placeholder="Product Number" onChange={this.inputHandler} 
@@ -245,6 +242,9 @@ const mapDispatchToProps = dispatch => {
     onFetchAllTasks: id => dispatch(actions.fetchAllTasks(id)),
     onDeleteTask: (prodid, userid) => dispatch(actions.deleteTask(prodid, userid)),
     onPurchaseAdidas: details => dispatch(actions.purchaseAdidas(details)),
+    onPurchaseEastbay: details => dispatch(actions.purchaseEastbay(details)),
+    onPurchaseFootlocker: details => dispatch(actions.purchaseFootlocker(details)),
+    onPurchaseChampssports: details => dispatch(actions.purchaseChampssports(details)),
     onFetchAllProfiles: id => dispatch(actions.fetchAllProfiles(id)),
     onLogout: () => dispatch(actions.logout())
   }

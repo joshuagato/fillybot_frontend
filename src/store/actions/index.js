@@ -1,4 +1,5 @@
-export { addTask, fetchAllTasks, deleteTask, purchaseAdidas } from './task-actions';
+export { addTask, fetchAllTasks, deleteTask, purchaseAdidas, purchaseEastbay, purchaseFootlocker, purchaseChampssports } 
+  from './task-actions';
 
 export { fetchAllProfiles } from './profile-actions';
 

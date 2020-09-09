@@ -18,6 +18,33 @@ export const purchaseAdidas = productAndUserDetails => {
   };
 };
 
+export const purchaseEastbay = productAndUserDetails => {
+  return dispatch => {
+    axios.post('/eastbay', productAndUserDetails)
+    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // .then(response => console.log(response.data))
+    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+  };
+};
+
+export const purchaseFootlocker = productAndUserDetails => {
+  return dispatch => {
+    axios.post('/footlocker', productAndUserDetails)
+    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // .then(response => console.log(response.data))
+    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+  };
+};
+
+export const purchaseChampssports = productAndUserDetails => {
+  return dispatch => {
+    axios.post('/champssports', productAndUserDetails)
+    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // .then(response => console.log(response.data))
+    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+  };
+};
+
 export const deleteTask = (productId, userId) => {
   return dispatch => {
     axios.delete('/deletetask/' + productId)
