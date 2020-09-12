@@ -210,7 +210,7 @@
 
       .status {
         display: inline-block;
-        width: 10rem;
+        width: 11rem;
         // margin-right: 0;
       }
 
@@ -231,6 +231,14 @@
 
             &:hover {
               color: green;
+            }
+          }
+
+          &#edit {
+            transition: all 0.3s ease-in-out;
+
+            &:hover {
+              color: yellow;
             }
           }
 

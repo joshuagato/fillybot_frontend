@@ -15,6 +15,7 @@ import loginReducer from './store/reducers/login-reducer';
 import profilesReducer from './store/reducers/profiles-reducer';
 
 import 'animate.css/animate.css';
+import "react-loader-spinner/dist/loader/css/react-spinner-loader.css"
 axios.defaults.baseURL = 'http://127.0.0.1:5000';
 // axios.defaults.baseURL = 'http://34.210.128.197:5000';
 // axios.defaults.baseURL = 'http://54.190.13.88';

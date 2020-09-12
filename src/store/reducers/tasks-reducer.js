@@ -8,7 +8,6 @@ const initialState = {
 
 const reducer = (state = initialState, action) => {
   switch(action.type) {
-
     case actionTypes.FETCH_TASKS_START:
       return { ...state, loading: true };
 

@@ -55,7 +55,7 @@ class Login extends Component {
               </label>
             </div>
             <div className="button-group">
-              <button type="submit" className="grow_spin">Log In</button>
+              <button type="submit" className="grow_ellipse">Log In</button>
             </div>
             <div className="button-group">
               <span className="question">Not a member yet?</span>

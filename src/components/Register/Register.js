@@ -72,7 +72,7 @@ class Register extends Component {
               </label>
             </div>
             <div className="button-group">
-              <button type="submit" className="grow_ellipse">JOIN US</button>
+              <button type="submit" className="grow_spin">JOIN US</button>
             </div>
             <div className="button-group">
               <span className="question">Already with us?</span>

@@ -1,6 +1,12 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
+const startAction = () => {
+  return {
+    type: actionTypes.FETCH_TASKS_START,
+  };
+}
+
 export const addTask = productDetails => {
   return dispatch => {
     axios.post('/addtask', productDetails)
@@ -11,6 +17,7 @@ export const addTask = productDetails => {
 
 export const purchaseAdidas = productAndUserDetails => {
   return dispatch => {
+    dispatch(startAction());
     axios.post('/adidas', productAndUserDetails)
     .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
     // .then(response => console.log(response.data))
@@ -20,6 +27,7 @@ export const purchaseAdidas = productAndUserDetails => {
 
 export const purchaseEastbay = productAndUserDetails => {
   return dispatch => {
+    dispatch(startAction());
     axios.post('/eastbay', productAndUserDetails)
     .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
     // .then(response => console.log(response.data))
@@ -29,6 +37,7 @@ export const purchaseEastbay = productAndUserDetails => {
 
 export const purchaseFootlocker = productAndUserDetails => {
   return dispatch => {
+    dispatch(startAction());
     axios.post('/footlocker', productAndUserDetails)
     .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
     // .then(response => console.log(response.data))
@@ -38,6 +47,7 @@ export const purchaseFootlocker = productAndUserDetails => {
 
 export const purchaseChampssports = productAndUserDetails => {
   return dispatch => {
+    dispatch(startAction());
     axios.post('/champssports', productAndUserDetails)
     .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
     // .then(response => console.log(response.data))

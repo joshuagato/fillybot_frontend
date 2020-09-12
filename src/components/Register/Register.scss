@@ -132,17 +132,15 @@
         button[class^="grow"]:hover::after {
           transition: all 0.5s ease-out;
         }
-        button.grow_ellipse::after {
-          border-radius: 50%;
-          left: -50%;
-          right: -50%;
-          top: -150%;
-          bottom: -150%;
-          line-height: 8.34em;
-          transform: scale(0, 0);
+        button.grow_spin::after {
+          left: 0;
+          right: 0;
+          top: 0;
+          bottom: 0;
+          transform: scale(0, 0) rotate(-180deg);
         }
-        button.grow_ellipse:hover::after {
-          transform: scale(1, 1);
+        button.grow_spin:hover::after {
+          transform: scale(1, 1) rotate(0deg);
         }
 
         .question {

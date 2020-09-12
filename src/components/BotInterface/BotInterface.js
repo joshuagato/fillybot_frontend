@@ -5,7 +5,8 @@ import * as actions from './../../store/actions/index';
 
 import swal from 'sweetalert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faTrashAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import Loader from 'react-loader-spinner';
 
 class BotInterface extends Component {
 
@@ -17,7 +18,8 @@ class BotInterface extends Component {
       productnumber: '',
       productsize: '0',
       productquantity: '',
-      profile: '0'
+      profile: '0',
+      status: 'Ready'
     },
     createTaskDisabled: true,
     profileinfo: {},
@@ -133,6 +135,8 @@ class BotInterface extends Component {
     const prod = this.state.productinfo;
     const sizes = this.state.sizes;
     const sites = this.state.sites;
+    const status = this.state.productinfo.status;
+    const loading = this.props.loading;
 
     return (
       <div className="bot-interface">
@@ -205,15 +209,23 @@ class BotInterface extends Component {
                 <span className="prod-id">{task.prod_number}</span><span className="size">{task.prod_size}</span>
                 <span className="site">{task.website}</span><span className="profile">
                   {this.getProfileName(task.profile)}</span>
-                <span className="status">{'IDLE'}</span>
-                <span className="action">
-                  <span id="start" onClick={() => this.purchase(task, this.getProfileData(task.profile))} title="Purchase">
-                    <FontAwesomeIcon icon={faPlay} />
+                <span className="status">{status}</span>
+                <React.Fragment>
+                  <span className="action">
+                    {!loading ? <React.Fragment>
+                      <span id="start" onClick={() => this.purchase(task, this.getProfileData(task.profile))} title="Purchase">
+                        <FontAwesomeIcon icon={faPlay} />
+                      </span>
+                      <span id="edit" title="Edit">
+                        <FontAwesomeIcon icon={faPencilAlt} />
+                      </span>
+                      <span id="delete" onClick={this.deleteTask.bind(this, task.id)} title="Delete">
+                        <FontAwesomeIcon icon={faTrashAlt} />
+                      </span>
+                    </React.Fragment>:
+                    <Loader type="Bars" color="#00BFFF" height={15} width={100} timeout={200000} />}
                   </span>
-                  <span id="delete" onClick={this.deleteTask.bind(this, task.id)} title="Delete">
-                    <FontAwesomeIcon icon={faTrashAlt} />
-                  </span>
-                </span>
+                </React.Fragment>
               </div>
             ))}
           </section>
@@ -229,10 +241,11 @@ class BotInterface extends Component {
 
 const mapStateToProps = state => {
   return {
-    tasks:  state.tasksReducer.tasks,
-    failureMessage:  state.tasksReducer.failureMessage,
+    tasks: state.tasksReducer.tasks,
+    failureMessage: state.tasksReducer.failureMessage,
     profiles: state.profilesReducer.profiles,
-    user: state.loginReducer.user
+    user: state.loginReducer.user,
+    loading: state.tasksReducer.loading
   }
 };
 
