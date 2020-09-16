@@ -48,9 +48,9 @@ class BotInterface extends Component {
     this.props.onAddTask(this.state.productinfo);
   }
 
-  purchase = (productDetails, userDetails) => {
+  purchase = (productDetails, userDetails, taskId) => {
     const { user, prod_name, prod_number, prod_qty, prod_size } = productDetails;
-    const details = { ...userDetails, user, prod_number, prod_name, prod_qty, prod_size };
+    const details = { ...userDetails, user, prod_number, prod_name, prod_qty, prod_size, taskId };
 
     if (productDetails.website === 'adidas') {
       this.props.onPurchaseAdidas(details);
@@ -135,8 +135,6 @@ class BotInterface extends Component {
     const prod = this.state.productinfo;
     const sizes = this.state.sizes;
     const sites = this.state.sites;
-    const status = this.state.productinfo.status;
-    const loading = this.props.loading;
 
     return (
       <div className="bot-interface">
@@ -209,11 +207,12 @@ class BotInterface extends Component {
                 <span className="prod-id">{task.prod_number}</span><span className="size">{task.prod_size}</span>
                 <span className="site">{task.website}</span><span className="profile">
                   {this.getProfileName(task.profile)}</span>
-                <span className="status">{status}</span>
+                <span className="status">{task.status}</span>
                 <React.Fragment>
                   <span className="action">
-                    {!loading ? <React.Fragment>
-                      <span id="start" onClick={() => this.purchase(task, this.getProfileData(task.profile))} title="Purchase">
+                    {task.status === 'Ready' ?
+                    <React.Fragment>
+                      <span id="start" onClick={() => this.purchase(task, this.getProfileData(task.profile), task.id)} title="Purchase">
                         <FontAwesomeIcon icon={faPlay} />
                       </span>
                       <span id="edit" title="Edit">
@@ -223,7 +222,7 @@ class BotInterface extends Component {
                         <FontAwesomeIcon icon={faTrashAlt} />
                       </span>
                     </React.Fragment>:
-                    <Loader type="Bars" color="#00BFFF" height={15} width={100} timeout={200000} />}
+                    <Loader type="Bars" color="#00BFFF" height={15} width={100} timeout={300000} />}
                   </span>
                 </React.Fragment>
               </div>

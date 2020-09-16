@@ -1,9 +1,10 @@
 import * as actionTypes from './actionTypes';
 import axios from 'axios';
 
-const startAction = () => {
+const startAction = taskId => {
   return {
-    type: actionTypes.FETCH_TASKS_START,
+    type: actionTypes.START_PURCHASE_AND_SPINNER,
+    taskId
   };
 }
 
@@ -17,41 +18,41 @@ export const addTask = productDetails => {
 
 export const purchaseAdidas = productAndUserDetails => {
   return dispatch => {
-    dispatch(startAction());
-    axios.post('/adidas', productAndUserDetails)
-    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
-    // .then(response => console.log(response.data))
-    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+    dispatch(startAction(productAndUserDetails.taskId));
+    // axios.post('/adidas', productAndUserDetails)
+    // .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // // .then(response => console.log(response.data))
+    // .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
   };
 };
 
 export const purchaseEastbay = productAndUserDetails => {
   return dispatch => {
-    dispatch(startAction());
-    axios.post('/eastbay', productAndUserDetails)
-    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
-    // .then(response => console.log(response.data))
-    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+    dispatch(startAction(productAndUserDetails.taskId));
+    // axios.post('/eastbay', productAndUserDetails)
+    // .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // // .then(response => console.log(response.data))
+    // .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
   };
 };
 
 export const purchaseFootlocker = productAndUserDetails => {
   return dispatch => {
-    dispatch(startAction());
-    axios.post('/footlocker', productAndUserDetails)
-    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
-    // .then(response => console.log(response.data))
-    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+    dispatch(startAction(productAndUserDetails.taskId));
+    // axios.post('/footlocker', productAndUserDetails)
+    // .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // // .then(response => console.log(response.data))
+    // .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
   };
 };
 
 export const purchaseChampssports = productAndUserDetails => {
   return dispatch => {
-    dispatch(startAction());
-    axios.post('/champssports', productAndUserDetails)
-    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
-    // .then(response => console.log(response.data))
-    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+    dispatch(startAction(productAndUserDetails.taskId));
+    // axios.post('/champssports', productAndUserDetails)
+    // .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // // .then(response => console.log(response.data))
+    // .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
   };
 };
 
