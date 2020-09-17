@@ -19,40 +19,40 @@ export const addTask = productDetails => {
 export const purchaseAdidas = productAndUserDetails => {
   return dispatch => {
     dispatch(startAction(productAndUserDetails.taskId));
-    // axios.post('/adidas', productAndUserDetails)
-    // .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
-    // // .then(response => console.log(response.data))
-    // .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+    axios.post('/adidas', productAndUserDetails)
+    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // .then(response => console.log(response.data))
+    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
   };
 };
 
 export const purchaseEastbay = productAndUserDetails => {
   return dispatch => {
     dispatch(startAction(productAndUserDetails.taskId));
-    // axios.post('/eastbay', productAndUserDetails)
-    // .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
-    // // .then(response => console.log(response.data))
-    // .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+    axios.post('/eastbay', productAndUserDetails)
+    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // .then(response => console.log(response.data))
+    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
   };
 };
 
 export const purchaseFootlocker = productAndUserDetails => {
   return dispatch => {
     dispatch(startAction(productAndUserDetails.taskId));
-    // axios.post('/footlocker', productAndUserDetails)
-    // .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
-    // // .then(response => console.log(response.data))
-    // .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+    axios.post('/footlocker', productAndUserDetails)
+    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // .then(response => console.log(response.data))
+    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
   };
 };
 
 export const purchaseChampssports = productAndUserDetails => {
   return dispatch => {
     dispatch(startAction(productAndUserDetails.taskId));
-    // axios.post('/champssports', productAndUserDetails)
-    // .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
-    // // .then(response => console.log(response.data))
-    // .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
+    axios.post('/champssports', productAndUserDetails)
+    .then(() => dispatch(fetchAllTasks(productAndUserDetails.user)))
+    // .then(response => console.log(response.data))
+    .catch(() => dispatch(fetchAllTasks(productAndUserDetails.user)));
   };
 };
 

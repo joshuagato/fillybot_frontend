@@ -5,7 +5,7 @@ import * as actions from './../../store/actions/index';
 
 import swal from 'sweetalert';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faPlay, faTrashAlt, faPencilAlt } from '@fortawesome/free-solid-svg-icons';
+import { faPlay, faTrashAlt, faPencilAlt, faCheck } from '@fortawesome/free-solid-svg-icons';
 import Loader from 'react-loader-spinner';
 
 class BotInterface extends Component {
@@ -49,8 +49,8 @@ class BotInterface extends Component {
   }
 
   purchase = (productDetails, userDetails, taskId) => {
-    const { user, prod_name, prod_number, prod_qty, prod_size } = productDetails;
-    const details = { ...userDetails, user, prod_number, prod_name, prod_qty, prod_size, taskId };
+    const {user, prod_name, prod_number, prod_qty, prod_size} = productDetails;
+    const details = {...userDetails, user, prod_number, prod_name, prod_qty, prod_size, taskId};
 
     if (productDetails.website === 'adidas') {
       this.props.onPurchaseAdidas(details);
@@ -121,8 +121,7 @@ class BotInterface extends Component {
       p.profile !== i.profile) {
         
       if (i.productsite && i.productsite !== "0" && i.productname && i.productnumber && 
-        i.productquantity && parseInt(i.productquantity) >= 1 &&
-        parseInt(i.profile) >= 1)
+        i.productquantity && parseInt(i.productquantity) >= 1 && parseInt(i.profile) >= 1)
           this.setState({ createTaskDisabled: false });
 
       else this.setState({ createTaskDisabled: true });
@@ -208,23 +207,28 @@ class BotInterface extends Component {
                 <span className="site">{task.website}</span><span className="profile">
                   {this.getProfileName(task.profile)}</span>
                 <span className="status">{task.status}</span>
-                <React.Fragment>
-                  <span className="action">
-                    {task.status === 'Ready' ?
+                <span className="action">
+                  {task.status === 'Ordered' &&
                     <React.Fragment>
-                      <span id="start" onClick={() => this.purchase(task, this.getProfileData(task.profile), task.id)} title="Purchase">
-                        <FontAwesomeIcon icon={faPlay} />
-                      </span>
-                      <span id="edit" title="Edit">
-                        <FontAwesomeIcon icon={faPencilAlt} />
-                      </span>
-                      <span id="delete" onClick={this.deleteTask.bind(this, task.id)} title="Delete">
-                        <FontAwesomeIcon icon={faTrashAlt} />
-                      </span>
-                    </React.Fragment>:
-                    <Loader type="Bars" color="#00BFFF" height={15} width={100} timeout={300000} />}
-                  </span>
-                </React.Fragment>
+                    <span id="checked"><FontAwesomeIcon icon={faCheck} /></span>
+                    <span className="delete" onClick={this.deleteTask.bind(this, task.id)} title="Delete">
+                      <FontAwesomeIcon icon={faTrashAlt} />
+                    </span></React.Fragment>}
+                  {task.status === 'Ready' &&
+                  <React.Fragment>
+                    <span id="start" onClick={() => this.purchase(task, this.getProfileData(task.profile), task.id)} title="Purchase">
+                      <FontAwesomeIcon icon={faPlay} />
+                    </span>
+                    <span id="edit" title="Edit">
+                      <FontAwesomeIcon icon={faPencilAlt} />
+                    </span>
+                    <span id="delete" onClick={this.deleteTask.bind(this, task.id)} title="Delete">
+                      <FontAwesomeIcon icon={faTrashAlt} />
+                    </span>
+                  </React.Fragment>}
+                  {task.status === 'Loading' &&
+                  <Loader type="Bars" color="#00BFFF" height={15} width={100} timeout={900000} />}
+                </span>
               </div>
             ))}
           </section>
